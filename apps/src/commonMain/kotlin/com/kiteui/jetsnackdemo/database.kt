@@ -201,9 +201,7 @@ val snacks = listOf(
     )
 )
 
-fun Snack.getPriceString(): String {
-    return "$${price / 100.0}"
-}
+
 
 val collections = listOf(
     SnackCollection(

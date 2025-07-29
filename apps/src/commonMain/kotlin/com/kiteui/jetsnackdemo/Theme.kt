@@ -35,16 +35,13 @@ val jetsnackDark = Theme(
     cornerRadii = CornerRadii.RatioOfSpacing(1f),
     background = Color.fromHexString("#191a1a"),
     foreground = Color.white,
+    separatorOverride = Color.gray(0.3f),
     derivations = mapOf(
         HeaderSemantic to {
             it.withoutBack(
                 foreground = if (it.background.closestColor().perceivedBrightness > 0.5f) Color.black else Color.white
             )
         },
-//        MainContentSemantic to {
-//            it.withoutBack
-//        },
-
         OuterSemantic to {
             it.withBack(
                 cascading = false,
@@ -79,19 +76,12 @@ val jetsnackDark = Theme(
                 font =it.font.copy(size = 1.0.rem, weight = 600),
             )
         },
-//        FieldSemantic to {
-//            it.withBack(
-//                background = Color.gray(0.7f),
-////                foreground = Color.gray(0.7f)
-//            )
-//        },
-
-//        ImportantSemantic to {
-//            it.withBack(
-//                background = beemeImportantColor,
-//                foreground = Color.white
-//            )
-//        },
+        FieldSemantic to {
+            it.withBack(
+                background = Color.gray(0.2f),
+                cornerRadii =  CornerRadii.ForceConstant(100.rem),
+            )
+        },
         FocusSemantic to {
             it.withBack(
                 outline = it.outline
@@ -120,10 +110,7 @@ val jetsnackDark = Theme(
         },
         DialogSemantic to {
             it.withBack(
-                background = Color.white,
-                cornerRadii = CornerRadii.ForceConstant(2.rem),
-                padding = Edges(2.rem),
-                cascading = false,
+                background = Color.fromHexString("#191a1a"),
             )
         },
     )
@@ -165,53 +152,28 @@ data object SnackLargeTitle : Semantic("snack-large-title") {
     }
 }
 
-data object DarkBlueToLightBlueGradient : Semantic("dark-blue-to-light-blue-gradient") {
-    override fun default(theme: Theme): ThemeAndBack {
-        return theme.withBack(
-            background = LinearGradient(
-                listOf(
-                    GradientStop(
-                        0f,
-                        Color.fromHexString("#4539d3")
-                    ),
+val darkBlue = Color.fromHexString("#4539d3")
+val lightBlue = Color.fromHexString("#79d7db")
 
-                    GradientStop(                        1f
-                        , Color.fromHexString("#79d7db"))
-                ),
-            ),
-            cornerRadii = CornerRadii.PerCorner(1.rem,
-                true,
-                true,
-                false,
-                false
-                )
-        )
-    }
-}
+data class GradientBackgroundSemantic(val color1: Color, val color2: Color) : Semantic("gradient-background-${color1.toInt()}-${color2.toInt()}") {
 
-data object LightBlueToDarkBlueGradient : Semantic("light-blue-to-dark-blue-gradient") {
     override fun default(theme: Theme): ThemeAndBack {
         return theme.withBack(
             background = LinearGradient(
                 listOf(
                     GradientStop(                        0f
-                        , Color.fromHexString("#79d7db")),
+                        , color1),
                     GradientStop(
                         1f,
-                        Color.fromHexString("#4539d3")
+                        color2
                     )
 
                 ),
-            ),
-            cornerRadii = CornerRadii.PerCorner(2.rem,
-                true,
-                true,
-                true,
-                true
             )
         )
     }
 }
+
 
 
 
@@ -275,4 +237,19 @@ data object TextLightGreen: Semantic("text-light-green") {
             foreground = greenishBlue
         )
     }
+}
+
+data class TestCircleIconSemantic(val size: Dimension) :
+    Semantic("test-usericon-${size.value.toString().filter { it.isLetterOrDigit() }}") {
+    override fun default(theme: Theme): ThemeAndBack = theme.withBack(
+        cornerRadii = CornerRadii.PerCorner(
+            100.rem,
+            true,
+            false,
+            true,
+            false
+        ),
+        font = theme.font.copy(size = size / 2),
+        padding = Edges(0.px)
+    )
 }

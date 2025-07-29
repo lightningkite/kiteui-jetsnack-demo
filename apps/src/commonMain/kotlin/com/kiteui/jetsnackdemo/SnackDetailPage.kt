@@ -1,11 +1,14 @@
 package com.kiteui.jetsnackdemo
 
+import com.kiteui.jetsnackdemo.DescriptionTextSemantic.withBack
 import com.kiteui.jetsnackdemo.model.CartItem
 import com.lightningkite.kiteui.Routable
+import com.lightningkite.kiteui.models.CornerRadii
 import com.lightningkite.kiteui.models.Edges
 import com.lightningkite.kiteui.models.Icon
 import com.lightningkite.kiteui.models.ImageRemote
 import com.lightningkite.kiteui.models.ImageScaleType
+import com.lightningkite.kiteui.models.ThemeDerivation
 import com.lightningkite.kiteui.models.rem
 import com.lightningkite.kiteui.navigation.Page
 import com.lightningkite.kiteui.navigation.mainPageNavigator
@@ -36,6 +39,7 @@ import com.lightningkite.kiteui.views.l2.icon
 import com.lightningkite.readable.Property
 import com.lightningkite.readable.invoke
 import com.lightningkite.readable.shared
+import getPriceString
 import kotlinx.coroutines.launch
 
 @Routable("/snack-detail/{id}")
@@ -55,15 +59,18 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
                 padding = 1.rem
                 sizeConstraints(height = 25.rem) - frame {
 
-                    DarkBlueToLightBlueGradient.onNext - sizeConstraints(height = 15.rem) - frame {
+                    GradientBackgroundSemantic(darkBlue, lightBlue).onNext - sizeConstraints(height = 15.rem) - frame {
                         padding = 0.0.rem
                     }
-                    centered - sizeConstraints(width = 20.rem, height = 20.rem) - CircleIconSemantic(10.rem).onNext - image {
+                    centered - sizeConstraints(
+                        width = 20.rem,
+                        height = 20.rem
+                    ) - CircleIconSemantic(10.rem).onNext - image {
                         source = ImageRemote(snack.imageUrl)
                         scaleType = ImageScaleType.Crop
                     }
                     atTopStart - button {
-                        icon(Icon.arrowBack,"Arrow back")
+                        icon(Icon.arrowBack, "Arrow back")
                         onClick {
                             mainPageNavigator.goBack()
                         }
@@ -80,7 +87,7 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
 
 
                 val expandDescriptionToggle = Property(false)
-                DescriptionTextSemantic.onNext -text {
+                DescriptionTextSemantic.onNext - text {
                     ::content {
                         if (expandDescriptionToggle()) {
                             "Lorem Ipsum Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. " +
@@ -92,7 +99,7 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
                     }
                 }
                 centered - button {
-                    bold - TextLightGreen.onNext - text{
+                    bold - TextLightGreen.onNext - text {
                         ::content {
                             if (expandDescriptionToggle()) "SEE LESS" else "SEE MORE"
                         }
@@ -104,17 +111,18 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
                 DescriptionTextSemantic.onNext - text("Ingredients")
                 DescriptionTextSemantic.onNext - text("Vanilla, Almond Eggs, Butter, Cream, Sugar")
                 separator()
-                h2{content ="Customers also bought"
-                paddingByEdge = Edges(0.0.rem, 1.0.rem, 0.0.rem, 0.0.rem)
+                h2 {
+                    content = "Customers also bought"
+                    paddingByEdge = Edges(0.0.rem, 1.0.rem, 0.0.rem, 0.0.rem)
                 }
                 scrollingHorizontally - row {
                     forEachUpdating(shared { snacks.shuffled().subList(0, 5) }) { snack ->
-                        snackCardSquareBackground(snack)
+                        snackItemAvatarStyle(snack)
                     }
                 }
 
-                h2{
-                    content ="Popular on Jetsnack"
+                h2 {
+                    content = "Popular on Jetsnack"
                     paddingByEdge = Edges(0.0.rem, 0.5.rem, 0.0.rem, 0.0.rem)
                 }
                 scrollingHorizontally - row {
@@ -124,7 +132,7 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
                             snacks.filter { collectionSnacks.contains(it.id) }
                         } ?: emptyList()
                     }) { snack ->
-                        snackCardSquareBackground(snack)
+                        snackItemAvatarStyle(snack)
                     }
                 }
             }
@@ -141,7 +149,7 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
                     }
                 }
 
-                PriceTextSemantic.onNext - centered -bold - text {
+                PriceTextSemantic.onNext - centered - bold - text {
                     padding = 0.5.rem
 
                     ::content {
@@ -156,7 +164,11 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
                         quantity.set(quantity.value + 1)
                     }
                 }
-                LightBlueToDarkBlueGradient.onNext - expanding - button {
+                ThemeDerivation.invoke {
+                    it.withBack(
+                        cornerRadii = CornerRadii.ForceConstant(2.rem)
+                    )
+                }.onNext - GradientBackgroundSemantic(lightBlue, darkBlue).onNext - expanding - button {
                     padding = 0.5.rem
 
                     centered - text {

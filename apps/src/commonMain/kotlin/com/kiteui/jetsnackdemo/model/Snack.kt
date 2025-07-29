@@ -10,6 +10,11 @@ data class Snack(
     val tagline: String = "",
     val tags: Set<String> = emptySet()
 )
+
+fun Snack.getPriceString(): String {
+    return "$${price / 100.0}"
+}
+
 //
 ///**
 // * Static data

@@ -4,10 +4,11 @@
 
 val lifeStyleFilters = listOf(
     FilterWithImage("Organic", "https://zal.im/wasm/jetsnack/images/organic.jpg"),
-    FilterWithImage("Gluten-free", "https://zal.im/wasm/jetsnack/images/gluten-free.jpg"),
-    FilterWithImage("Dairy-free", "https://zal.im/wasm/jetsnack/images/dairy-free.jpg"),
-    FilterWithImage("Sweet", "https://zal.im/wasm/jetsnack/images/sweet.jpg"),
-    FilterWithImage("Savory", "https://zal.im/wasm/jetsnack/images/savory.jpg")
+    FilterWithImage("Gluten-free", "https://zal.im/wasm/jetsnack/images/gluten_free.jpg"),
+    FilterWithImage("Paleo", "https://zal.im/wasm/jetsnack/images/paleo.jpg"),
+    FilterWithImage("Vegan", "https://zal.im/wasm/jetsnack/images/vegan.jpg"),
+    FilterWithImage("Vegetarian", "https://zal.im/wasm/jetsnack/images/organic.jpg"),
+    FilterWithImage("Whole30", "https://zal.im/wasm/jetsnack/images/paleo.jpg"),
 )
 val categories = listOf(
     FilterWithImage(
@@ -20,7 +21,7 @@ val categories = listOf(
     ),
     FilterWithImage(
         name = "Desserts",
-        imgUrl = "https://zal.im/wasm/jetsnack/images/dessert.jpg"
+        imgUrl = "https://zal.im/wasm/jetsnack/images/desserts.jpg"
     ),
     FilterWithImage(
         name = "Nuts",
