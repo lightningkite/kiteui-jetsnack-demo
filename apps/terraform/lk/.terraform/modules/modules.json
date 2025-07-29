@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"web","Source":"git::https://github.com/lightningkite/terraform-static-site.git","Dir":".terraform/modules/web"},{"Key":"web.template_files","Source":"registry.terraform.io/hashicorp/dir/template","Version":"1.0.2","Dir":".terraform/modules/web.template_files"}]}
