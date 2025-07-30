@@ -11,7 +11,6 @@ plugins {
     alias(libs.plugins.shadow) apply false
     alias(libs.plugins.vite) apply false
     alias(libs.plugins.kotlinCocoapods) apply false
-    id("com.google.gms.google-services") version "4.4.2" apply false
 }
 
 buildscript {
@@ -33,7 +32,7 @@ allprojects {
 //    publishing()
 
     repositories {
-        group = "com.lightningkite.jetsnackdemo"
+        group = "com.kiteui.jetsnackdemo"
         mavenLocal()
         maven("https://lightningkite-maven.s3.us-west-2.amazonaws.com")
         google()

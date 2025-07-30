@@ -85,6 +85,7 @@ fun ViewWriter.categoriesSearch() : ViewModifiable {
 
                             expanding -centered -bold - text(it.name)
                            TestCircleIconSemantic(10.rem).onNext - sizeConstraints(height = 20.rem, width = 13.rem) - image {
+                               description = it.name
                                 source = ImageRemote(it.imgUrl)
                                scaleType = ImageScaleType.Crop
                            }
@@ -104,6 +105,10 @@ fun ViewWriter.categoriesSearch() : ViewModifiable {
 
                             expanding -centered -bold - text(it.name)
                             TestCircleIconSemantic(10.rem).onNext - sizeConstraints(height = 20.rem, width = 13.rem) - image {
+                                ::description {
+                                    it.name
+                                }
+                                description = it.name
                                 source = ImageRemote(it.imgUrl)
                                 scaleType = ImageScaleType.Crop
                             }

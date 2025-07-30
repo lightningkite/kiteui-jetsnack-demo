@@ -1,4 +1,4 @@
-package com.lightningkite.jetsnackdemo
+package com.kiteui.jetsnackdemo
 
 import com.kiteui.jetsnackdemo.AutoRoutes
 import com.kiteui.jetsnackdemo.app

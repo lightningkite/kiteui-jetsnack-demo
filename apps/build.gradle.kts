@@ -10,11 +10,9 @@ plugins {
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.comLightningkiteKiteui)
     alias(libs.plugins.vite)
-    id("com.google.gms.google-services")
-    id("io.sentry.android.gradle") version "4.5.1"
 }
 
-group = "com.lightningkite.jetsnackdemo"
+group = "com.kiteui.jetsnackdemo"
 version = "1.0-SNAPSHOT"
 
 
@@ -106,11 +104,11 @@ kotlin {
 }
 
 android {
-    namespace = "com.lightningkite.jetsnackdemo"
+    namespace = "com.kiteui.jetsnackdemo"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.lightningkite.jetsnackdemo"
+        applicationId = "com.kiteui.jetsnackdemo"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
@@ -152,11 +150,11 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 }
 
 configure<KiteUiPluginExtension> {
-    this.packageName = "com.lightningkite.jetsnackdemo"
+    this.packageName = "com.kiteui.jetsnackdemo"
     this.iosProjectRoot = project.file("./ios/app")
 }
 

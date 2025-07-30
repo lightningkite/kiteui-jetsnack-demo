@@ -14,6 +14,7 @@ import com.lightningkite.kiteui.navigation.Page
 import com.lightningkite.kiteui.navigation.mainPageNavigator
 import com.lightningkite.kiteui.views.ViewModifiable
 import com.lightningkite.kiteui.views.ViewWriter
+import com.lightningkite.kiteui.views.atBottom
 import com.lightningkite.kiteui.views.atTopStart
 import com.lightningkite.kiteui.views.bold
 import com.lightningkite.kiteui.views.card
@@ -48,14 +49,14 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
         val snack = snacks.firstOrNull() { it.id == id }
         if (snack == null) throw IllegalArgumentException("No snack with id $id")
         val quantity = Property(1)
-        return col {
-            padding = 0.0.rem
+        return frame {
+//            padding = 0.0.rem
             launch {
                 cart().find { it.snack.id == id }?.let {
                     quantity.set(it.amount)
                 }
             }
-            unpadded - scrolling - expanding - col {
+            unpadded - scrolling  - col {
                 padding = 1.rem
                 sizeConstraints(height = 25.rem) - frame {
 
@@ -66,6 +67,7 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
                         width = 20.rem,
                         height = 20.rem
                     ) - CircleIconSemantic(10.rem).onNext - image {
+                        description = snack.name
                         source = ImageRemote(snack.imageUrl)
                         scaleType = ImageScaleType.Crop
                     }
@@ -136,7 +138,7 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
                     }
                 }
             }
-            card - row {
+            atBottom - sizeConstraints( height = 3.5.rem) - card - row {
                 gap = 0.5.rem
                 padding = 0.5.rem
                 space()

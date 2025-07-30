@@ -56,6 +56,9 @@ class CartPage : Page {
                         padding = 0.0.rem
                         expanding - row {
                             CircleIconSemantic(10.rem).onNext - sizeConstraints(width = 7.rem, height = 7.rem) - image {
+                                ::description {
+                                    item().snack.name
+                                }
                                 ::source {
                                     ImageRemote(item.invoke().snack.imageUrl)
                                 }

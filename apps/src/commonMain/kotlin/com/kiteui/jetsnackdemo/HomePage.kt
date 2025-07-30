@@ -203,6 +203,7 @@ fun ViewWriter.snackCardGradientSquareBackground(
             col {
                 space()
                 centered - sizeConstraints(width = 7.rem, height = 7.rem) - CircleIconSemantic(5.rem).onNext - image {
+                    ::description {snack().name}
                     ::source { ImageRemote(snack().imageUrl) }
                     scaleType = ImageScaleType.Crop
                 }
@@ -242,6 +243,7 @@ fun ViewWriter.snackItemAvatarStyle(snack: Readable<Snack>): ViewModifiable {
                         ::source {
                             ImageRemote(snack().imageUrl)
                         }
+                        ::description {snack().name}
                         scaleType = ImageScaleType.Crop
                     }
                     centered - text {

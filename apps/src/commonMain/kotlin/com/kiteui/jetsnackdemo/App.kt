@@ -1,6 +1,8 @@
 package com.kiteui.jetsnackdemo
 
 import com.kiteui.jetsnackdemo.model.CartItem
+import com.lightningkite.kiteui.Platform
+import com.lightningkite.kiteui.current
 import com.lightningkite.kiteui.views.ViewWriter
 import com.lightningkite.kiteui.models.*
 import com.lightningkite.kiteui.models.AffirmativeSemantic.withBack
@@ -16,6 +18,7 @@ import com.lightningkite.kiteui.views.direct.h2
 import com.lightningkite.kiteui.views.direct.icon
 import com.lightningkite.kiteui.views.direct.link
 import com.lightningkite.kiteui.views.direct.row
+import com.lightningkite.kiteui.views.direct.rowCollapsingToColumn
 import com.lightningkite.kiteui.views.direct.shownWhen
 import com.lightningkite.kiteui.views.direct.text
 import com.lightningkite.kiteui.views.direct.unpadded
@@ -49,6 +52,7 @@ fun ViewWriter.app(navigator: PageNavigator, dialog: PageNavigator): ViewModifia
     return MainContentSemantic.onNext - appBase(navigator, dialog) {
         padding = 0.0.rem
         gap = 0.rem
+        applySafeInsets(bottom = false)
         OuterSemantic.onNext - col {
             shownWhen { mainPageNavigator.currentPage() !is UseFullPage } - bold - centered  - h1{
                 content = "Jetsnack powered by KiteUi"
@@ -90,7 +94,7 @@ fun ViewWriter.bottomBar(navItems: List<NavLink>): ViewModifiable {
                         )
                     } else null
                 }
-                centered - row {
+                centered - rowCollapsingToColumn(40.rem) {
                     padding = 0.5.rem
                     gap = 0.5.rem
                     shownWhen { navLink.hidden?.invoke() != true }
@@ -99,6 +103,7 @@ fun ViewWriter.bottomBar(navItems: List<NavLink>): ViewModifiable {
                         ::description { navLink.title() }
                     }
                     shownWhen {
+                        Platform.current == Platform.Android ||
                         mainPageNavigator.currentPage()
                             ?.let {
                                 mainPageNavigator.routes.render(it)
