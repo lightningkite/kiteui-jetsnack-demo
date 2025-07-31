@@ -13,6 +13,7 @@ import com.lightningkite.kiteui.models.ThemeDerivation
 import com.lightningkite.kiteui.models.rem
 import com.lightningkite.kiteui.navigation.Page
 import com.lightningkite.kiteui.navigation.dialogPageNavigator
+import com.lightningkite.kiteui.reactive.*
 import com.lightningkite.kiteui.views.ViewModifiable
 import com.lightningkite.kiteui.views.ViewWriter
 import com.lightningkite.kiteui.views.atTopStart
@@ -33,19 +34,22 @@ import com.lightningkite.kiteui.views.direct.toggleButton
 import com.lightningkite.kiteui.views.direct.unpadded
 import com.lightningkite.kiteui.views.expanding
 import com.lightningkite.kiteui.views.l2.icon
-import com.lightningkite.readable.Property
-import com.lightningkite.readable.lens
-import lifeStyleFilters
+import com.lightningkite.reactive.context.*
+import com.lightningkite.reactive.core.*
+import com.lightningkite.reactive.extensions.*
+import com.lightningkite.reactive.lensing.*
+import com.lightningkite.readable.*
 import kotlin.collections.plus
+import lifeStyleFilters
 
 class FilterDialog : Page, UseFullPage {
     val availableFilterPrices = listOf("$", "$$", "$$$", "$$$$")
-    val selectedPriceFilters = Property(emptyList<String>())
+    val selectedPriceFilters = Signal(emptyList<String>())
 
-    val selectedLifeStylesFilters = Property(emptyList<FilterWithImage>())
-    val selectedCategoriesFilters = Property(emptyList<FilterWithImage>())
+    val selectedLifeStylesFilters = Signal(emptyList<FilterWithImage>())
+    val selectedCategoriesFilters = Signal(emptyList<FilterWithImage>())
 
-    val maxCaloriesSelected = Property(0.0f)
+    val maxCaloriesSelected = Signal(0.0f)
 
     override fun ViewWriter.render(): ViewModifiable {
         return col {

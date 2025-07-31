@@ -3,7 +3,7 @@
 agp = "8.10.1"
 androidBuildTools = "8.5.2"
 coroutines = "1.9.0"
-kiteui = "5.3.25"
+kiteui = "6.0.0"
 kotlin = "2.2.0"
 kotlinerCli = "1.0.5"
 lkGradleHelpers = "2.0.3"

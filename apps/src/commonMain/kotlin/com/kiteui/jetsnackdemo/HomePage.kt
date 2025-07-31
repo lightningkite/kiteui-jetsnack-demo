@@ -14,23 +14,19 @@ import com.lightningkite.kiteui.models.ThemeDerivation
 import com.lightningkite.kiteui.models.rem
 import com.lightningkite.kiteui.navigation.Page
 import com.lightningkite.kiteui.navigation.dialogPageNavigator
-import com.lightningkite.kiteui.navigation.mainPageNavigator
 import com.lightningkite.kiteui.views.*
 import com.lightningkite.kiteui.views.direct.*
 import com.lightningkite.kiteui.views.l2.icon
-import com.lightningkite.readable.Property
-import com.lightningkite.readable.Readable
-import com.lightningkite.readable.lens
-import com.lightningkite.readable.shared
-import lifeStyleFilters
+import com.lightningkite.reactive.core.*
 import kotlin.collections.filter
+import lifeStyleFilters
 
 
 @Routable("/")
 class HomePage : Page {
     override fun ViewWriter.render(): ViewModifiable {
 
-        val selectedLifeStyleFilters = Property<List<FilterWithImage>>(emptyList<FilterWithImage>())
+        val selectedLifeStyleFilters = Signal<List<FilterWithImage>>(emptyList<FilterWithImage>())
 
         val tastyTreatsCollection = collections.find { it.id == 1L }
         val popularCollection = collections.find { it.id == 2L }
@@ -38,7 +34,7 @@ class HomePage : Page {
         val newlyAdded = collections.find { it.id == 4L }
         val exclusiveCollection = collections.find { it.id == 5L }
 
-        val tastyTreatsSnacks = shared {
+        val tastyTreatsSnacks = remember {
             println("DEBUg tastyTreatsCollection ${tastyTreatsCollection}")
             val test = tastyTreatsCollection?.let { collection ->
                 val collectionSnacks = collection.snacks
@@ -49,7 +45,7 @@ class HomePage : Page {
             test
         }
 
-        val popularOnJetsnackSnacks = shared {
+        val popularOnJetsnackSnacks = remember {
             popularCollection?.let {
                 val collectionSnacks = it.snacks
                 snacks.filter { collectionSnacks.contains(it.id) }
@@ -57,7 +53,7 @@ class HomePage : Page {
         }
 
 
-        val wfhFavsSnacks = shared {
+        val wfhFavsSnacks = remember {
             exclusiveCollection?.let {
                 val collectionSnacks = it.snacks
                 snacks.filter { collectionSnacks.contains(it.id) }
@@ -65,14 +61,14 @@ class HomePage : Page {
         }
 
 
-        val newlyAddedSnacks = shared {
+        val newlyAddedSnacks = remember {
             wfhFavsCollection?.let {
                 val collectionSnacks = it.snacks
                 snacks.filter { collectionSnacks.contains(it.id) }
             } ?: emptyList()
         }
 
-        val exclusiveSnacks = shared {
+        val exclusiveSnacks = remember {
             exclusiveCollection?.let {
                 val collectionSnacks = it.snacks
                 snacks.filter { collectionSnacks.contains(it.id) }
@@ -179,7 +175,7 @@ class HomePage : Page {
 }
 
 fun ViewWriter.snackCardGradientSquareBackground(
-    snack: Readable<Snack>,
+    snack: Reactive<Snack>,
     firstGradientColor: Color,
     secondGradientColor: Color
 ): ViewModifiable {
@@ -230,7 +226,7 @@ fun ViewWriter.snackCardGradientSquareBackground(
     }
 }
 
-fun ViewWriter.snackItemAvatarStyle(snack: Readable<Snack>): ViewModifiable {
+fun ViewWriter.snackItemAvatarStyle(snack: Reactive<Snack>): ViewModifiable {
     return sizeConstraints(width = 8.rem, height = 10.rem) -
             link {
                 padding = 0.5.rem

@@ -35,11 +35,9 @@ import com.lightningkite.kiteui.views.direct.text
 import com.lightningkite.kiteui.views.direct.unpadded
 import com.lightningkite.kiteui.views.expanding
 import com.lightningkite.kiteui.views.forEachUpdating
-import com.lightningkite.kiteui.views.important
 import com.lightningkite.kiteui.views.l2.icon
-import com.lightningkite.readable.Property
-import com.lightningkite.readable.invoke
-import com.lightningkite.readable.shared
+import com.lightningkite.reactive.context.*
+import com.lightningkite.reactive.core.*
 import getPriceString
 import kotlinx.coroutines.launch
 
@@ -48,7 +46,7 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
     override fun ViewWriter.render(): ViewModifiable {
         val snack = snacks.firstOrNull() { it.id == id }
         if (snack == null) throw IllegalArgumentException("No snack with id $id")
-        val quantity = Property(1)
+        val quantity = Signal(1)
         return frame {
 //            padding = 0.0.rem
             launch {
@@ -88,7 +86,7 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
                 DescriptionTextSemantic.onNext - text("Detail")
 
 
-                val expandDescriptionToggle = Property(false)
+                val expandDescriptionToggle = Signal(false)
                 DescriptionTextSemantic.onNext - text {
                     ::content {
                         if (expandDescriptionToggle()) {
@@ -118,7 +116,7 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
                     paddingByEdge = Edges(0.0.rem, 1.0.rem, 0.0.rem, 0.0.rem)
                 }
                 scrollingHorizontally - row {
-                    forEachUpdating(shared { snacks.shuffled().subList(0, 5) }) { snack ->
+                    forEachUpdating(remember { snacks.shuffled().subList(0, 5) }) { snack ->
                         snackItemAvatarStyle(snack)
                     }
                 }
@@ -128,7 +126,7 @@ class SnackDetailPage(val id: Long) : Page, UseFullPage {
                     paddingByEdge = Edges(0.0.rem, 0.5.rem, 0.0.rem, 0.0.rem)
                 }
                 scrollingHorizontally - row {
-                    forEachUpdating(shared {
+                    forEachUpdating(remember {
                         collections.find { it.id == 2L }?.let {
                             val collectionSnacks = it.snacks
                             snacks.filter { collectionSnacks.contains(it.id) }

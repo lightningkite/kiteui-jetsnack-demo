@@ -11,6 +11,7 @@ import com.lightningkite.kiteui.models.ImageScaleType
 import com.lightningkite.kiteui.models.ThemeDerivation
 import com.lightningkite.kiteui.models.rem
 import com.lightningkite.kiteui.navigation.Page
+import com.lightningkite.kiteui.reactive.*
 import com.lightningkite.kiteui.views.ViewModifiable
 import com.lightningkite.kiteui.views.ViewWriter
 import com.lightningkite.kiteui.views.atCenterEnd
@@ -35,8 +36,11 @@ import com.lightningkite.kiteui.views.expanding
 import com.lightningkite.kiteui.views.forEachUpdating
 import com.lightningkite.kiteui.views.important
 import com.lightningkite.kiteui.views.l2.icon
-import com.lightningkite.readable.invoke
-import com.lightningkite.readable.shared
+import com.lightningkite.reactive.context.*
+import com.lightningkite.reactive.core.*
+import com.lightningkite.reactive.extensions.*
+import com.lightningkite.reactive.lensing.*
+import com.lightningkite.readable.*
 import getPriceString
 
 @Routable("/my-cart")
@@ -174,7 +178,7 @@ class CartPage : Page {
                 }
             }
             scrollingHorizontally - row {
-                forEachUpdating(shared {
+                forEachUpdating(remember {
                     collections.find { it.id == 2L }?.let {
                         val collectionSnacks = it.snacks
                         snacks.filter { collectionSnacks.contains(it.id) }

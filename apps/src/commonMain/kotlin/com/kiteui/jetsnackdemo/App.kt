@@ -3,12 +3,13 @@ package com.kiteui.jetsnackdemo
 import com.kiteui.jetsnackdemo.model.CartItem
 import com.lightningkite.kiteui.Platform
 import com.lightningkite.kiteui.current
-import com.lightningkite.kiteui.views.ViewWriter
 import com.lightningkite.kiteui.models.*
 import com.lightningkite.kiteui.models.AffirmativeSemantic.withBack
 import com.lightningkite.kiteui.navigation.PageNavigator
 import com.lightningkite.kiteui.navigation.mainPageNavigator
+import com.lightningkite.kiteui.reactive.*
 import com.lightningkite.kiteui.views.ViewModifiable
+import com.lightningkite.kiteui.views.ViewWriter
 import com.lightningkite.kiteui.views.bold
 import com.lightningkite.kiteui.views.centered
 import com.lightningkite.kiteui.views.direct.col
@@ -24,13 +25,17 @@ import com.lightningkite.kiteui.views.direct.text
 import com.lightningkite.kiteui.views.direct.unpadded
 import com.lightningkite.kiteui.views.dynamicTheme
 import com.lightningkite.kiteui.views.expanding
-import com.lightningkite.readable.*
 import com.lightningkite.kiteui.views.l2.*
+import com.lightningkite.reactive.context.*
+import com.lightningkite.reactive.core.*
+import com.lightningkite.reactive.extensions.*
+import com.lightningkite.reactive.lensing.*
+import com.lightningkite.readable.*
 
-val appTheme = Property<Theme>(jetsnackDark)
+val appTheme = Signal<Theme>(jetsnackDark)
 
 // Notification Items
-val fcmToken: Property<String?> = Property(null)
+val fcmToken: Signal<String?> = Signal(null)
 val setFcmToken =
     { token: String -> fcmToken.value = token } //This is for iOS. It is used in the iOS app. Do not remove.
 
@@ -42,7 +47,7 @@ val mainNavPages = listOf(
     NavLink(title = { "Profile" }, icon = { Icon.person }) { { ProfilePage() } },
 )
 
-val cart = Property<List<CartItem>>(listOf())
+val cart = Signal<List<CartItem>>(listOf())
 
 fun ViewWriter.app(navigator: PageNavigator, dialog: PageNavigator): ViewModifiable {
 

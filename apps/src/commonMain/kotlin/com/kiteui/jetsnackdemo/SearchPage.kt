@@ -33,17 +33,15 @@ import com.lightningkite.kiteui.views.expanding
 import com.lightningkite.kiteui.views.fieldTheme
 import com.lightningkite.kiteui.views.l2.RecyclerViewPlacerVerticalGrid
 import com.lightningkite.kiteui.views.l2.children
-import com.lightningkite.readable.Property
-import com.lightningkite.readable.lens
-import com.lightningkite.readable.shared
-import lifeStyleFilters
+import com.lightningkite.reactive.core.*
 import kotlin.collections.List
 import kotlin.collections.plus
+import lifeStyleFilters
 
 @Routable("/search")
 class SearchPage: Page {
     override fun ViewWriter.render(): ViewModifiable {
-        val search = Property("")
+        val search = Signal("")
 
         return col {
             row {
@@ -121,9 +119,9 @@ fun ViewWriter.categoriesSearch() : ViewModifiable {
 }
 
 
-fun ViewWriter.searchResultsView(search: Property<String>) : ViewModifiable{
-    val selectedLifeStyleFilters = Property<List<FilterWithImage>>(emptyList<FilterWithImage>())
-    val searchResults = shared {
+fun ViewWriter.searchResultsView(search: Signal<String>) : ViewModifiable{
+    val selectedLifeStyleFilters = Signal<List<FilterWithImage>>(emptyList<FilterWithImage>())
+    val searchResults = remember {
         snacks.filter {
             it.name.contains(search().lowercase())
         }
